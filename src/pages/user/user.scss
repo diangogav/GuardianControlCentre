@@ -1,0 +1,45 @@
+page-user {
+
+	.img {
+        display: flex;
+        justify-content: center;
+    }
+
+    .img div {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+
+    .img div img {width: 100%;}
+
+    .ion-row label{
+        color:#ff5e57;
+        font-weight: bold;
+    }
+    
+    .ion-row label p{
+        color: #808080;
+        font-weight: normal;
+    }
+
+    h3{
+        font-weight: lighter; 
+        width: 100%;
+        color: #333;
+        text-align: center;
+        font-size: 25px;
+        margin-bottom: 50px;
+    }
+
+    button {
+        background: transparent;
+        color: #ff5e57;
+        font-size: 30px;
+        width: 100%;
+        margin-top: 15px;
+        text-aling: center;
+    }
+
+}

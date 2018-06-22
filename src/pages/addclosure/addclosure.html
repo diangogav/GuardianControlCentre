@@ -1,0 +1,70 @@
+<ion-content>
+
+  <ion-item-group>
+    <ion-item-divider color="dark-blue" text-center>Name and type</ion-item-divider>
+
+    <ion-item class="item">
+      <ion-label>Closure name:</ion-label>
+       <ion-input type="text" class="input" required [(ngModel)]="marker.shortDescription"></ion-input>
+   </ion-item>
+  
+  <ion-item class="item">
+    <ion-label>Type of Closure:</ion-label>
+    <ion-select [(ngModel)]="Closure" cancelText="Cancel" okText="Done">
+      <ion-option value="Incident">Incident</ion-option>
+      <ion-option value="Issue">Issue</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item-divider color="dark-blue" text-center>Date and hour</ion-item-divider>
+
+  <ion-item class="item">
+    <ion-label>Date:</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" min="2017" class="input" required [(ngModel)]="marker.actualStartClosure"></ion-datetime>
+  </ion-item>
+  <ion-item class="item">
+    <ion-label>Hour:</ion-label>
+    <ion-datetime displayFormat="HH:mm A" class="input" required [(ngModel)]="marker.hour"></ion-datetime>
+  </ion-item>
+
+  <ion-item-divider color="dark-blue" text-center>Date and hour</ion-item-divider>
+
+  <ion-item class="item">
+    <ion-label>Mode of Detection:</ion-label>
+      <ion-select class="select" [(ngModel)]="marker.modeOfDetection" cancelText="Cancel" okText="Done" required>
+        <ion-option value="llamada">Recibí una llamada</ion-option>
+        <ion-option value="email">Recibí un Email</ion-option>
+        <ion-option value="texto">Recibí texto</ion-option>
+        <ion-option value="whatsapp">Recibí Whatsapp</ion-option>
+        <ion-option value="desconocido">Unkown</ion-option>
+     </ion-select>
+  </ion-item>
+
+  <ion-item class="item">
+    <ion-label>Select Motives:</ion-label>
+      <ion-select class="select" [(ngModel)]="marker.motive" cancelText="Cancel" okText="Done" required>
+              <ion-option value="evento">Event</ion-option>
+              <ion-option value="transporte">Transport</ion-option>
+              <ion-option value="accidente">Accident</ion-option>
+              <ion-option value="desconocido">Unkown</ion-option>
+            </ion-select>
+  </ion-item>
+
+  <ion-item class="item">
+    <ion-label>Duration:</ion-label>
+    <ion-input type="text" class="input" required [(ngModel)]="marker.duration"></ion-input>
+  </ion-item>
+
+  <ion-item class="item">
+    <ion-label>More Details:</ion-label>
+    <ion-textarea type="text" class="input" [(ngModel)]="marker.moreDetails"></ion-textarea>
+  </ion-item>
+   
+  </ion-item-group>
+
+  <div style="width: 100%; padding: 0px 25px; margin: 0px;"><button (click)= "ActivateGeolocation()">Get Location</button> </div>
+
+   <div style="width: 100%; padding: 0px 25px; margin: 0px;"><button (click)= "addClosure()">Save</button></div>
+  
+
+</ion-content>

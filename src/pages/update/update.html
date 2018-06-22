@@ -1,0 +1,99 @@
+<ion-content padding>
+
+  <form>
+
+    <!--<label>
+      id:
+      <ion-input type="number" name="id"  value="{{firstname.value}}"[(ngModel)]="id"></ion-input>
+    </label> -->
+
+    <div class="img"><div><img src="../assets/imgs/2.jpg" alt="avatar"></div></div>
+    <h3>{{ items.name }} {{ items.lastname }}</h3>
+
+
+<ion-grid>
+
+      <ion-row class="ion-row" >
+         <ion-col col-6 >
+            <label>
+              Lastname:
+              <p>
+                <ion-input  type="text" name="lastname" placeholder="{{ items.lastname }}" [(ngModel)]="userData.lastname">
+                </ion-input>
+              </p>
+            </label>
+          </ion-col>
+         <ion-col col-6>
+          <label>
+            Name:
+            <p>
+              <ion-input  placeholder="{{ items.name }}" value = "Hola" type="text" name="name"  [(ngModel)]="userData.name"> 
+              </ion-input>
+            </p>
+          </label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6>
+          <label>
+            Username:
+            <p>
+              <ion-input  type="text" name="username" placeholder="{{ items.username }}" [(ngModel)]="userData.username"></ion-input>
+            </p>
+          </label>
+        </ion-col>
+         <ion-col col-6>
+          <label>
+            Password:
+            <p>
+            <ion-input  type="text" name="password" placeholder="{{ items.password }}" [(ngModel)]="userData.password"></ion-input>
+          </p>
+        </label>
+      </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6>
+          <label>
+            Mobile Phone:
+           <p>
+             <ion-input  type="text" name="mobilePhone" placeholder="{{ items.mobilePhone }}" [(ngModel)]="userData.mobilePhone"></ion-input>
+           </p>
+         </label>
+         </ion-col>
+         <ion-col col-6>
+          <label>
+            Office Phone:
+            <p>
+              <ion-input  type="text" name="officePhone" placeholder="{{ items.officePhone }}" [(ngModel)]="userData.officePhone"> 
+              </ion-input>
+            </p>
+          </label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6>
+          <label>
+            Email:
+            <p>
+            <ion-input  type="email" name="email" placeholder="{{ items.email }}" [(ngModel)]="userData.email"></ion-input>
+          </p>
+        </label>
+      </ion-col>
+      </ion-row>
+
+  </ion-grid>
+
+  </form>
+
+  <ion-fab bottom right>
+    <button ion-fab color="dark-blue"><ion-icon name="information"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button color="rojo" ion-fab (click)="settingsBack()"><ion-icon name="undo"></ion-icon></button>
+      <button color="rojo" ion-fab (click)="updateUserData()"><ion-icon name="checkmark"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,61 @@
+page-signup {
+
+	.bg {background-color: #222f3e;}
+
+    .input-wrapper {padding: 0px; margin: 0px;}
+
+    .item {
+        background: transparent;
+        padding: 0px 25px 0px 0px;
+        margin: 0px;
+    }
+
+    .label{
+        width: 100%;
+        padding: 0px 10px 0px 35px;
+        margin: 14px 0px 25px 0px;
+    }
+
+    .input {
+        color: #fff;
+        width: 100%;
+        padding: 0px 0px 0px 35px;
+        margin: 0px;}
+
+    .logo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 50px 0px 50px 0px;
+    }
+    
+    .icon {
+        position: absolute;
+        top: 30px;
+        left: 25px;
+        font-size: 21px;
+        color: rgba(#fff, 0.2);
+    }
+
+    .recovery{
+        cursor: pointer;
+        font-size: 16px;
+        color: rgba(#fff, 0.2);
+        font-weight: lighter;
+        margin-top: 5px;
+    }
+
+    h1 {color: #fff; text-align: center;}
+
+    form {background: transparent;}
+
+    button{
+        color: #fff;
+        width: 100%;
+        font-size: 16px;
+        margin: 10px 0px 10px 0px;
+        padding: 15px 0px;
+        background: #48dbfb;
+    }
+
+}

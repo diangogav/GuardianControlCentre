@@ -1,0 +1,39 @@
+
+<ion-content padding>
+
+    <div class="img"><div><img src="../assets/imgs/2.jpg" alt="avatar"></div></div>
+    <h3>{{ items.name }} {{ items.lastname }}</h3>
+
+
+<ion-grid>
+
+      <ion-row class="ion-row" >
+         <ion-col col-6 ><label>Lastname:<p>{{ items.lastname }}</p></label></ion-col>
+         <ion-col col-6><label>Name:<p>{{ items.name }}</p></label></ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6><label>Username:<p>{{ items.username }}</p></label></ion-col>
+         <ion-col col-6><label>Password:<p>{{ items.password }}</p></label></ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6><label>Mobile Phone:<p>{{ items.mobilePhone }}</p></label></ion-col>
+         <ion-col col-6><label>Office Phone:<p>{{ items.officePhone }}</p></label></ion-col>
+      </ion-row>
+
+      <ion-row class="ion-row">
+         <ion-col col-6><label>Email:<p>{{ items.email }}</p></label></ion-col>
+      </ion-row>
+
+  </ion-grid>
+
+   <ion-fab bottom right>
+    <button ion-fab color="dark-blue"><ion-icon name="information"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button color="rojo" ion-fab (click)="updata()"><ion-icon name="create" ios="ios-create"></ion-icon></button>
+      <button color="rojo" ion-fab (click)="logOut()"><ion-icon name="log-out"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>
