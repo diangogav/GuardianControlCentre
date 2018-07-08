@@ -60,7 +60,7 @@ export class SearchrcPage {
   }
 
 
-  	getItems(ev: any) {
+  	getItems(ev: any) { 
     // Reset items back to all of the items
     this.initializeItems();
 

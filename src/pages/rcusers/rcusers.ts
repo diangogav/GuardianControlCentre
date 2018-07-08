@@ -9,7 +9,7 @@ import firebase from 'firebase';
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
- */
+ */ 
 
 @IonicPage()
 @Component({
@@ -26,7 +26,7 @@ export class RcusersPage {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController
   ) {
-    
+    this.initializeItems();
     }
   
   ionViewDidLoad() {
@@ -57,6 +57,27 @@ export class RcusersPage {
         }); 
     })
 
+  }
+
+  initializeItems() {
+    this.items;
+  }
+
+  getUsers(ev: any) { 
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.itemsArray = this.itemsArray.filter((itemsArray) => {
+        return (itemsArray.name.toLowerCase().indexOf(val.toLowerCase()) > -1 ||          
+            itemsArray.username.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+            itemsArray.lastname.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 
   userPage(user){
