@@ -30,6 +30,8 @@ import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 import { Geolocation } from '@ionic-native/geolocation';
 import { UserProvider } from '../providers/user/user';
 
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
 export const firebaseConfig = {
   apiKey: "AIzaSyBJpDGocfQ5yOTUYC1j5pAk3F0duwT4Now",
   authDomain: "guardiancontrolcentre-249f9.firebaseapp.com",
@@ -61,7 +63,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

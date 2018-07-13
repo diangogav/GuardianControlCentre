@@ -1,6 +1,11 @@
+import { UpdatePage } from '../update/update';
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, App } from 'ionic-angular';
+import {Observable} from 'rxjs/Observable';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import firebase from 'firebase';
+import { AuthProvider } from '../../providers/auth/auth';
+import { UserProvider } from '../../providers/user/user';
 
 import { SearchrcPage } from '../searchrc/searchrc';
 
@@ -23,12 +28,17 @@ export class DetailsrcPage {
 
   item;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
-              public viewCtrl: ViewController)
-            {
-                  this.item = navParams.data.item;
-            }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public afDB: AngularFireDatabase,
+    public auth: AuthProvider,
+    public userProvider: UserProvider,
+    public app: App,
+    public loadingCtrl: LoadingController  
+    ) {   
+      this.item = navParams.data.item;   
+    }
 
   ngOnInit():void{
    this.drawMap();

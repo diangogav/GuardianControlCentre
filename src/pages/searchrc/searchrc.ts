@@ -21,46 +21,46 @@ export class SearchrcPage {
   closure = [];
 
   constructor(public navCtrl: NavController, 
-  			      public navParams: NavParams)
+              public navParams: NavParams)
    {
 
-   		this.initializeItems();
+      this.initializeItems();
 
    }
 
   initializeItems() {
-  	this.closure = [
-  		{
-  			'nombre' : 'Calle averiada',
-  			'descripcion' : 'La calle no esta afaltada',
- 		   	'location' : 'Calle Zamora 8899',
-  			'hora' : '3:00 PM',
+    this.closure = [
+      {
+        'nombre' : 'Calle averiada',
+        'descripcion' : 'La calle no esta afaltada',
+        'location' : 'Calle Zamora 8899',
+        'hora' : '3:00 PM',
         'fecha' : '28/03/2018',
-  			'status' : 'current'
-  		},
-  		{
-  			'nombre' : 'Trafico',
-  			'descripcion' : 'Mucho tracico en la carretera principal',
- 			  'location' : 'Autopista Derechos',
-  			'hora' : '5:49 PM',
+        'status' : 'current'
+      },
+      {
+        'nombre' : 'Trafico',
+        'descripcion' : 'Mucho tracico en la carretera principal',
+        'location' : 'Autopista Derechos',
+        'hora' : '5:49 PM',
         'fecha' : '28/03/2018',
-  			'status' : 'current'
-  		},
-  		{
-  			'nombre' : 'Accidente',
-  			'descripcion' : 'Arrallamiento en la via',
- 			  'location' : 'Avenida Dos Caminos',
-  			'hora' : '6:40 PM',
+        'status' : 'current'
+      },
+      {
+        'nombre' : 'Accidente',
+        'descripcion' : 'Arrallamiento en la via',
+        'location' : 'Avenida Dos Caminos',
+        'hora' : '6:40 PM',
         'fecha' : '28/03/2018',
-  			'status' : 'current'
-  		}
-  	];
+        'status' : 'current'
+      }
+    ];
 
-  	this.items = this.closure;
+    this.items = this.closure;
   }
 
 
-  	getItems(ev: any) { 
+    getItems(ev: any) { 
     // Reset items back to all of the items
     this.initializeItems();
 
@@ -71,15 +71,15 @@ export class SearchrcPage {
     if (val && val.trim() != '') {
       this.items = this.items.filter((items) => {
         return (items.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-        		items.descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-        		items.location.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-        		items.hora.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            items.descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+            items.location.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+            items.hora.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
 
   viewDetails(item){
-  	 this.navCtrl.push(DetailsrcPage, { item: item });
+     this.navCtrl.push(DetailsrcPage, { item: item });
   }
 
 }
