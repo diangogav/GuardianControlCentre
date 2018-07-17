@@ -27,8 +27,8 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  usersBack(){
-    this.navCtrl.push(RcusersPage);
-  }
+  // usersBack(){
+  //   this.navCtrl.push(RcusersPage);
+  // }
 
 }

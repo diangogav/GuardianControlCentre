@@ -31,6 +31,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { UserProvider } from '../providers/user/user';
 
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { Camera } from '@ionic-native/camera';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBJpDGocfQ5yOTUYC1j5pAk3F0duwT4Now",
@@ -85,7 +86,7 @@ export const firebaseConfig = {
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen, Camera,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,

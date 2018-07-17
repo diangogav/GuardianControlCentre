@@ -1,7 +1,7 @@
 <ion-content>
 
   <ion-item-group>
-    <ion-item-divider color="dark-blue" text-center>Name and type</ion-item-divider>
+    <ion-item-divider color="rojo" text-center>Name and type</ion-item-divider>
 
     <ion-item class="item">
       <ion-label>Closure name:</ion-label>
@@ -16,7 +16,7 @@
     </ion-select>
   </ion-item>
 
-  <ion-item-divider color="dark-blue" text-center>Date and hour</ion-item-divider>
+  <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
 
   <ion-item class="item">
     <ion-label>Date:</ion-label>
@@ -27,7 +27,7 @@
     <ion-datetime displayFormat="HH:mm A" class="input" required [(ngModel)]="marker.hour"></ion-datetime>
   </ion-item>
 
-  <ion-item-divider color="dark-blue" text-center>Date and hour</ion-item-divider>
+  <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
 
   <ion-item class="item">
     <ion-label>Mode of Detection:</ion-label>
@@ -61,6 +61,15 @@
   </ion-item>
    
   </ion-item-group>
+
+  <ion-row *ngFor='let photo of myphoto'>
+    <ion-col col-3><img src="{{ photo }}" width="50px" height="65px"></ion-col>    
+  </ion-row>
+
+  <button ion-button full color="primary" (click)="takePhoto()">tomar foto</button>
+  <button ion-button full color="secondary" (click)="pickPhoto()">coger foto</button>
+
+   
 
   <div style="width: 100%; padding: 0px 25px; margin: 0px;"><button (click)= "ActivateGeolocation()">Get Location</button> </div>
 

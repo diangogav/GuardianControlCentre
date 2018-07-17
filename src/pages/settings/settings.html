@@ -1,7 +1,7 @@
 
 <ion-content padding>
 
-    <div class="img"><div><img src="../assets/imgs/2.jpg" alt="avatar"></div></div>
+    <div class="img"><div><img src="assets/imgs/2.jpg" alt="avatar"></div></div>
     <h3>{{ items.name }} {{ items.lastname }}</h3>
 
 
@@ -28,12 +28,10 @@
 
   </ion-grid>
 
-   <ion-fab bottom right>
-    <button ion-fab color="dark-blue"><ion-icon name="information"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button color="rojo" ion-fab (click)="updata()"><ion-icon name="create" ios="ios-create"></ion-icon></button>
-      <button color="rojo" ion-fab (click)="logOut()"><ion-icon name="log-out"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
+
+      <button color="primary" ion-button full (click)="updata()"><ion-icon name="create" ios="ios-create"></ion-icon></button>
+
+      <button color="rojo" ion-button full (click)="logOut()"><ion-icon name="log-out"></ion-icon></button>
+    
 
 </ion-content>
