@@ -62,9 +62,8 @@
    
   </ion-item-group>
 
-  <ion-row *ngFor='let photo of myphoto'>
-    <ion-col col-3><img src="{{ photo }}" width="50px" height="65px"></ion-col>    
-  </ion-row>
+
+   <img src="{{ photo }}" width="50px" height="65px">
 
   <button ion-button full color="primary" (click)="takePhoto()">tomar foto</button>
   <button ion-button full color="secondary" (click)="pickPhoto()">coger foto</button>

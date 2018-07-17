@@ -16,7 +16,7 @@ import { HomePage} from '../home/home';
 })
 export class AddclosurePage {
 
-myphoto:[];
+myphoto:any;
 
 
  marker = {
