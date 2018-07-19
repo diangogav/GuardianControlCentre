@@ -88,12 +88,7 @@
 
   </form>
 
-  <ion-fab bottom right>
-    <button ion-fab color="dark-blue"><ion-icon name="information"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button color="rojo" ion-fab (click)="settingsBack()"><ion-icon name="undo"></ion-icon></button>
-      <button color="rojo" ion-fab (click)="updateUserData()"><ion-icon name="checkmark"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
+      <button ion-button color="primary" (click)="updateUserData()"><ion-icon name="checkmark"></ion-icon></button>
+      <button ion-button color="rojo" (click)="settingsBack()"><ion-icon name="undo"></ion-icon></button>
 
 </ion-content>

@@ -36,7 +36,7 @@ export class SearchrcPage {
         'location' : 'Calle Zamora 8899',
         'hora' : '3:00 PM',
         'fecha' : '28/03/2018',
-        'status' : 'current'
+        'status' : 'Current'
       },
       {
         'nombre' : 'Trafico',
@@ -44,15 +44,23 @@ export class SearchrcPage {
         'location' : 'Autopista Derechos',
         'hora' : '5:49 PM',
         'fecha' : '28/03/2018',
-        'status' : 'current'
+        'status' : 'Current'
       },
       {
         'nombre' : 'Accidente',
-        'descripcion' : 'Arrallamiento en la via',
+        'descripcion' : 'Arraollamiento en la via',
         'location' : 'Avenida Dos Caminos',
         'hora' : '6:40 PM',
         'fecha' : '28/03/2018',
-        'status' : 'current'
+        'status' : 'Current'
+      },
+      {
+        'nombre' : 'Sin paso en la via',
+        'descripcion' : 'Calle cerrada temparmente',
+        'location' : 'Avenida Dos Caminos',
+        'hora' : '8:40 AM',
+        'fecha' : '20/05/2018',
+        'status' : 'Current'
       }
     ];
 

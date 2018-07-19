@@ -55,9 +55,10 @@ export class SettingsPage {
       this.navCtrl.push(UpdatePage);
     }
 
+    // SALIR DE LA SESION
     logOut() {
       const root = this.app.getRootNav();
-      root.popToRoot(); 
+      root.popToRoot();
     }
 
 

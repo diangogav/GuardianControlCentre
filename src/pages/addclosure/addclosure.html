@@ -63,16 +63,18 @@
   </ion-item-group>
 
 
-   <img src="{{ photo }}" width="50px" height="65px">
+  <img src="{{ photo }}" width="50px" height="65px">
 
-  <button ion-button full color="primary" (click)="takePhoto()">tomar foto</button>
-  <button ion-button full color="secondary" (click)="pickPhoto()">coger foto</button>
+  <!-- BOTONES DE LA CAMARA -->
 
-   
+  <ion-row>
+    <ion-col col-6><button ion-button color="primary" (click)="takePhoto()">tomar foto</button></ion-col>
+    <ion-col col-6><button ion-button color="secondary" (click)="pickPhoto()">coger foto</button></ion-col>
+  </ion-row>
 
-  <div style="width: 100%; padding: 0px 25px; margin: 0px;"><button (click)= "ActivateGeolocation()">Get Location</button> </div>
+  <!-- BOTONES DEL ADDCLOSURE -->
 
-   <div style="width: 100%; padding: 0px 25px; margin: 0px;"><button (click)= "addClosure()">Save</button></div>
+  <button ion-button color="primary" (click)="ActivateGeolocation()">Get Location</button>
+  <button ion-button color="primary" (click)="addClosure()">Save</button>
   
-
 </ion-content>

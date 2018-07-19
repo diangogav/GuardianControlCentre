@@ -1,9 +1,22 @@
 page-searchrc {
 
-	.hd {
+	.hd{
 		padding: 0px;
 		margin-bottom: 10px;
 		background-color: #ff5e57;
+	}
+
+	#ac{
+		background-color: green;}
+
+	#fn{
+		background-color: red;}
+
+	button{
+		background: transparent;
+		color: #fff;
+		font-size: 14px; 
+		padding: 10px;
 	}
 
 }

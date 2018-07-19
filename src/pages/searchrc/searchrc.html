@@ -13,6 +13,11 @@
 
 <ion-content>
 
+	<ion-row>
+		<ion-col col-6 text-center id="ac"><button>Actuales (3)</button></ion-col>
+		<ion-col col-6 text-center id="fn"><button>Finalizados (5)</button></ion-col>
+	</ion-row>
+
 	<ion-list>
 	  <ion-item ion-item *ngFor="let item of closure">
 	    <h2>{{ item.nombre }}</h2>
