@@ -1,33 +1,21 @@
-import { Component } from '@angular/core';
-import { NavController, DateTime,ToastController } from 'ionic-angular';
-import { SearchrcPage } from '../searchrc/searchrc';
-import { AddclosurePage } from '../../pages/addclosure/addclosure';
-
-import { Time } from '@angular/common';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController,ToastController  } from 'ionic-angular';
+import leaflet from 'leaflet';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 
-
-import * as Leaflet from 'leaflet';
-import 'leaflet-draw';
-
-declare const L: any;
-//let myObservable = Observable.interval(1000);
+import { SearchrcPage } from '../searchrc/searchrc';
+import { AddclosurePage } from '../../pages/addclosure/addclosure';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  data: any;
-  estado: any;
   items;
-  errorMessage: string;
   markerArray: any[] = [];
 
   constructor(
@@ -35,13 +23,105 @@ export class HomePage {
     public dbFirebase :FirebaseDbProvider,
     public afDB: AngularFireDatabase, 
     public toastCtrl: ToastController
-  ) {
+) {
+ 
+  }
+ 
+  ionViewDidEnter() {
 
-      
+    this.getMarkers();
 
   }
-  ionViewDidEnter(){
-          this.items = firebase.database().ref('markers').orderByKey();
+
+  ngOnInit():void{
+    this.loadmap();
+   }
+ 
+  loadmap() {
+    this.map = leaflet.map('map').setView([-0.1836298, -78.4821206], 13);
+    leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attributions: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18
+    }).addTo(this.map);
+
+
+    this.map.locate({
+      setView: true,
+    }).on('locationfound', (e) => {
+      var radius = e.accuracy / 2;
+
+      let markerGroup = leaflet.featureGroup();
+      let marker: any = leaflet.marker([e.latitude, e.longitude])
+      .bindPopup("Estás dentro de los " + radius + "metros desde este punto").openPopup();
+          
+      markerGroup.addLayer(marker);
+      this.map.addLayer(markerGroup);
+      leaflet.circle(e.latlng, radius).addTo(this.map);
+
+      }).on('locationerror', (err) => {
+        alert(err.message);
+    })
+ 
+  }
+
+
+  //=======================================================================================================
+showMarker(markerArray) {
+    if(markerArray.length > 0){
+        var values;
+        var date;
+        var month;
+        var year;
+        var hour;
+        var minutes;
+        var actualDate = new Date();
+        var expirationDate = new Date();
+        console.log(markerArray);
+        for (var i=0; i<markerArray.length;i++){
+          values = markerArray[i].expirationDate.split("-");
+          date = values[2];
+          month = values[1];
+          year = values[0];
+
+          values = markerArray[i].expirationTime.split(":");
+          hour = values[0];
+          minutes = values[1];
+
+          expirationDate.setDate(parseInt(date));
+          expirationDate.setMonth(parseInt(month) - 1);
+          expirationDate.setFullYear(parseInt(year));
+          expirationDate.setHours(parseInt(hour));
+          expirationDate.setMinutes(parseInt(minutes));
+
+              var map = this.map
+              var latitud;
+              var longitud;
+              
+            
+                if(expirationDate.getTime() < actualDate.getTime()){
+                    
+                }else{
+
+                  latitud = markerArray[i].latitudAdded
+                  longitud = markerArray[i].longitudAdded
+
+                  let markerGroup = leaflet.featureGroup();
+
+                  let marker: any = leaflet
+                  .marker([latitud, longitud])
+                  .bindPopup('soy el numero' + i)
+                  .openPopup();
+
+
+                  markerGroup.addLayer(marker);
+                  this.map.addLayer(markerGroup);
+        }
+      }
+    }
+  }
+//============================================================================
+  getMarkers(){
+    this.items = firebase.database().ref('markers').orderByKey();
             let toast = this.toastCtrl.create({
                 message: "Actualizando... ",
                 position: 'top',
@@ -57,105 +137,12 @@ export class HomePage {
             });
             this.showMarker(this.markerArray);
             toast.dismiss();
-          });          
-    
-    
+          }); 
 
   }
-      
-  showMarker(markerArray) {
-    if(markerArray.length > 0){
-      var values;
-      var date;
-      var month;
-      var year;
-      var hour;
-      var minutes;
-      var actualDate = new Date();
-      var expirationDate = new Date();
-      console.log(markerArray);
-      for (var i=0; i<markerArray.length;i++){
-        values = markerArray[i].expirationDate.split("-");
-        date = values[2];
-        month = values[1];
-        year = values[0];
-
-        values = markerArray[i].expirationTime.split(":");
-        hour = values[0];
-        minutes = values[1];
-
-        expirationDate.setDate(parseInt(date));
-        expirationDate.setMonth(parseInt(month) - 1);
-        expirationDate.setFullYear(parseInt(year));
-        expirationDate.setHours(parseInt(hour));
-        expirationDate.setMinutes(parseInt(minutes));
-
-            var map = this.map
-            var latitud;
-            var longitud;
-            
-          
-              if(expirationDate.getTime() < actualDate.getTime()){
-                  
-              }else{
-          
-                latitud = markerArray[i].latitudAdded
-                longitud = markerArray[i].longitudAdded
-                Leaflet.marker([latitud, longitud]).addTo(this.map)
-                .bindPopup('soy el numero' + i)
-                .openPopup();
-              }
-      }
-    }
-  }
-
+//=============================================================================
   addClosurePage(){
     this.navCtrl.push(AddclosurePage);
-  }
-
-  ngOnInit():void{
-   this.drawMap();
-  }
-
-  //MAPA LEAFLET
-  drawMap():void{
-    
-    this.map = Leaflet.map('map').setView([-0.1836298, -78.4821206], 13);
-    Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: 'Guardian Control Centre',
-      maxZoom: 18
-    }).addTo(this.map);
-
-    //SI HAY ERROR
-    function onLocationError(e){
-      alert(e.message);
-      console.log(e.message);
-    }
-
-    this.map.on('locationerror', onLocationError);
-    this.map.on('click', this.onMapClick,this);
-  }
-
-  showLocation(){
-    var map = this.map;
-    var popup = L.popup();
-
-      function onMapClick(e) {
-          popup
-              .setLatLng(e.latlng)
-              .setContent("Hiciste clic en el mapa en " + e.latlng.toString())
-              .openOn(map);
-      }
-
-      if(this.estado == 1){
-      map.on('click', onMapClick);
-      this.estado = 0;
-    }else{
-      map.off('click');
-      this.estado = 1;
-     
-    }
-    
   }
 
   onMapClick(e) {
@@ -165,5 +152,5 @@ export class HomePage {
   searchClosure(){
     this.navCtrl.push(SearchrcPage);
   }
-  
+
 }
