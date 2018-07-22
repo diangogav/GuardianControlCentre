@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 
 import { DetailsrcPage } from '../detailsrc/detailsrc';
+import firebase from 'firebase';
 
 /**
  * Generated class for the SearchrcPage page.
@@ -17,16 +18,44 @@ import { DetailsrcPage } from '../detailsrc/detailsrc';
 })
 export class SearchrcPage {
 
-  items: any;
+  items;
+  markerArray: any[] = [];
   closure = [];
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams)
+  constructor(
+      public navCtrl: NavController, 
+      public navParams: NavParams,
+      public toastCtrl: ToastController
+    )
    {
 
       this.initializeItems();
 
    }
+
+ionViewDidEnter(){
+
+    this.items = firebase.database().ref('markers').orderByKey();
+    let toast = this.toastCtrl.create({
+        message: "Actualizando... ",
+        position: 'top',
+        dismissOnPageChange: true
+  });
+
+    toast.present();   
+
+  this.items.on('value',(snapshot) => {
+    this.markerArray.splice(0,this.markerArray.length);
+    snapshot.forEach((childSnapshot) => {
+      this.markerArray.push(childSnapshot.val());
+    });
+    this.markerArray.forEach(data => {
+      console.log(data.shortDescription);
+    })
+    toast.dismiss();
+  }); 
+
+}
 
   initializeItems() {
     this.closure = [

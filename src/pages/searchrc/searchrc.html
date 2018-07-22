@@ -19,11 +19,11 @@
 	</ion-row>
 
 	<ion-list>
-	  <ion-item ion-item *ngFor="let item of closure">
-	    <h2>{{ item.nombre }}</h2>
-	    <p>{{ item.descripcion }}</p>
-	    <p>{{ item.location }}</p>
-	    <p>{{ item.fecha }} - {{ item.hora }}</p>
+	  <ion-item ion-item *ngFor="let item of markerArray">
+			<h2>{{ item.shortDescription }}</h2>
+			<p>{{ item.moreDetails }}</p>
+			<p>{{ item.actualStartClosure }}  -  {{ item.hour }}</p>
+	    
 	    <button ion-button clear item-end (click)="viewDetails(item)"><ion-icon name="arrow-forward"></ion-icon></button>
 	  </ion-item>
 	</ion-list>
