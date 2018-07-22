@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,ToastController  } from 'ionic-angular';
-import leaflet from 'leaflet';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+
+import leaflet from 'leaflet';
 import * as firebase from 'firebase/app';
 
 import { SearchrcPage } from '../searchrc/searchrc';
@@ -24,7 +25,8 @@ export class HomePage {
     public afDB: AngularFireDatabase, 
     public toastCtrl: ToastController
 ) {
- 
+
+
   }
  
   ionViewDidEnter() {
@@ -68,6 +70,12 @@ export class HomePage {
   //=======================================================================================================
 showMarker(markerArray) {
     if(markerArray.length > 0){
+        var name;
+        var startDate;
+        var startTime;
+        var endDate;
+        var endTime;
+
         var values;
         var date;
         var month;
@@ -82,6 +90,14 @@ showMarker(markerArray) {
           date = values[2];
           month = values[1];
           year = values[0];
+          name = markerArray[i].shortDescription;
+          startDate = markerArray[i].actualStartClosure;
+          startTime = markerArray[i].hour;
+          endDate = markerArray[i].expirationDate;
+          endTime = markerArray[i].expirationTime;
+
+          
+          console.log(name);
 
           values = markerArray[i].expirationTime.split(":");
           hour = values[0];
@@ -107,10 +123,9 @@ showMarker(markerArray) {
 
                   let markerGroup = leaflet.featureGroup();
 
-                  let marker: any = leaflet
-                  .marker([latitud, longitud])
-                  .bindPopup('soy el numero' + i)
-                  .openPopup();
+                  let marker: any = leaflet .marker([latitud, longitud])
+                  .bindPopup( name +'</br><b>Started: </b>'+ startDate +' <b> at </b> '+ startTime
+                  +'</br><b>End: </b>'+ endDate +' <b> at </b> '+ endTime) .openPopup();
 
 
                   markerGroup.addLayer(marker);
