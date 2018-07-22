@@ -16,19 +16,12 @@ import { RcusersPage } from '../rcusers/rcusers';
 })
 export class UserPage {
 
-  u = [];
+  userData;
  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-		this.u = navParams.data.user;
-		console.log(this.u);
+    this.userData = navParams.data.userData;   
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
-  }
-
-  // usersBack(){
-  //   this.navCtrl.push(RcusersPage);
-  // }
+ 
+ 
 
 }

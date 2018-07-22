@@ -43,7 +43,6 @@ export class DetailsrcPage {
 
   ngOnInit():void{
 
-   console.log(this.item);
    this.drawMap();
   }
 

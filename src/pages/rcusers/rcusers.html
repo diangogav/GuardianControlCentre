@@ -7,14 +7,18 @@
 <ion-content padding>
 
 <ion-list>
-  <ion-item  *ngFor='let user of itemsArray' (click)="userPage()">
+  <ion-item  *ngFor='let userData of usersArray'>
     <ion-avatar item-start>
       <img src="assets/imgs/2.jpg" width="100%">
     </ion-avatar>
-    <h2>{{user.name}} {{user.lastname}}</h2>
-    <p>{{user.username}}</p>
-    <button ion-button clear item-end><ion-icon name="arrow-forward"></ion-icon></button>
+    <h2>{{userData.name}} {{userData.lastname}}</h2>
+    <p>{{userData.username}}</p>
+
+    <button ion-button clear item-end (click)="userPage(userData)"><ion-icon name="arrow-forward"></ion-icon></button>
+
   </ion-item>
 </ion-list>
-
+<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 </ion-content>

@@ -17,8 +17,11 @@ import firebase from 'firebase';
   templateUrl: 'rcusers.html',
 })
 export class RcusersPage {
+  
   items;
-  itemsArray;
+  usersArray: any[] = [];
+  referenceToOldestKey = '';
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -34,7 +37,9 @@ export class RcusersPage {
   }
 
     ionViewDidEnter(){
-      this.items = firebase.database().ref('users').orderByKey();
+
+      this.getData();
+      /*this.items = firebase.database().ref('users').orderByKey();
               let toast = this.toastCtrl.create({
                   message: "Actualizando... ",
                   position: 'top',
@@ -55,32 +60,118 @@ export class RcusersPage {
 
          
         }); 
-    })
 
+        console.log(this.itemsArray);
+    })*/
+
+  }
+
+  getData(){
+
+
+
+    if(this.referenceToOldestKey == undefined){
+  
+    }else if (!this.referenceToOldestKey) { // if initial fetch
+  
+      let toast = this.toastCtrl.create({
+        message: "Actualizando... ",
+        position: 'top',
+        dismissOnPageChange: true
+      });
+    
+     toast.present(); 
+  
+      firebase.database().ref('users')
+      .orderByKey()
+      .limitToLast(20)
+      .once('value')
+      .then((snapshot) => { 
+          // changing to reverse chronological order (latest first)
+          let arrayOfKeys = Object.keys(snapshot.val())
+             .sort()
+             .reverse();
+          // transforming to array
+  
+          let results = arrayOfKeys
+             .map((key) => snapshot.val()[key]);
+  
+          // storing reference
+          this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+  
+          results.forEach(data => {
+            this.usersArray.push(data);
+          })
+  
+          // Do what you want to do with the data, i.e.
+          // append to page or dispatch({ … }) if using redux
+  
+          toast.dismiss();
+  
+       })
+       .catch((error) => {  } );
+     
+     } else {
+  
+      
+     
+      firebase.database().ref('markers')
+        .orderByKey()
+        .endAt(this.referenceToOldestKey)
+        .limitToLast(20)
+        .once('value')
+        .then((snapshot) => {
+          // changing to reverse chronological order (latest first)
+          // & removing duplicate
+          let arrayOfKeys = Object.keys(snapshot.val())
+              .sort()
+              .reverse()
+              .slice(1);
+  
+  
+           // transforming to array
+           let results = arrayOfKeys
+              .map((key) => snapshot.val()[key]);
+  
+           // updating reference
+           this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+           // Do what you want to do with the data, i.e.
+           // append to page or dispatch({ … }) if using redux
+           results.forEach(data => {
+            this.usersArray.push(data);
+          });
+
+
+        })
+       .catch((error) => {  } );
+     }
   }
 
   initializeItems() {
     this.items;
   }
 
-  getUsers(ev: any) { 
-    // Reset items back to all of the items
-    this.initializeItems();
 
-    // set val to the value of the searchbar
-    let val = ev.target.value;
+/********************************************************************************** */
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.itemsArray = this.itemsArray.filter((itemsArray) => {
-        return (itemsArray.name.toLowerCase().indexOf(val.toLowerCase()) > -1 ||          
-            itemsArray.username.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-            itemsArray.lastname.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
-  }
+	//Infinite Scroll
+	doInfinite(): Promise<any> {
 
-  userPage(user){
-    this.navCtrl.push(UserPage, { user: user });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+
+              this.getData();
+
+        resolve();
+      }, 500);
+    })
+ }
+
+/********************************************************************************** */
+
+
+  userPage(userData){
+
+    this.navCtrl.push(UserPage, { userData: userData });
   }
 }
