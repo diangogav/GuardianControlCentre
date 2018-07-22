@@ -34,7 +34,8 @@ myphoto:any;
   longitudAdded: 0,
   duration:'',
   expirationTime:'',
-  expirationDate: ''
+  expirationDate: '',
+  status: "current"
 
  } 
 

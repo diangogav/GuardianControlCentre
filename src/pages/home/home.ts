@@ -115,6 +115,12 @@ showMarker(markerArray) {
               
             
                 if(expirationDate.getTime() < actualDate.getTime()){
+
+                  var status = {
+                    status: "expired"
+                  }
+                  firebase.database().ref('markers/' + markerArray[i].id).update(status);
+                  console.log(markerArray[i].id);
                     
                 }else{
 
@@ -136,7 +142,7 @@ showMarker(markerArray) {
   }
 //============================================================================
   getMarkers(){
-    this.items = firebase.database().ref('markers').orderByKey();
+    this.items = firebase.database().ref('markers').orderByChild("status").equalTo('current');
             let toast = this.toastCtrl.create({
                 message: "Actualizando... ",
                 position: 'top',
