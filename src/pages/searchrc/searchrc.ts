@@ -35,17 +35,10 @@ export class SearchrcPage {
 /********************************************************************************** */
 
 ionViewDidEnter(){
-  let toast = this.toastCtrl.create({
-    message: "Actualizando... ",
-    position: 'top',
-    dismissOnPageChange: true
-  });
-
- toast.present(); 
+  
 
     this.getData();
 
-  toast.dismiss();
 
 }
 
@@ -68,9 +61,19 @@ ionViewDidEnter(){
 
 getData(){
 
+
+
   if(this.referenceToOldestKey == undefined){
 
   }else if (!this.referenceToOldestKey) { // if initial fetch
+
+    let toast = this.toastCtrl.create({
+      message: "Actualizando... ",
+      position: 'top',
+      dismissOnPageChange: true
+    });
+  
+   toast.present(); 
 
     firebase.database().ref('markers')
     .orderByKey()
@@ -95,10 +98,15 @@ getData(){
 
         // Do what you want to do with the data, i.e.
         // append to page or dispatch({ … }) if using redux
+
+        toast.dismiss();
+
      })
      .catch((error) => {  } );
    
    } else {
+
+    
    
     firebase.database().ref('markers')
       .orderByKey()
@@ -124,6 +132,8 @@ getData(){
          // append to page or dispatch({ … }) if using redux
          results.forEach(data => {
           this.markerArray.push(data);
+
+
         });
       })
      .catch((error) => {  } );
