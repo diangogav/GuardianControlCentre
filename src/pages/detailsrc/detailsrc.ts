@@ -9,8 +9,8 @@ import { UserProvider } from '../../providers/user/user';
 
 import { SearchrcPage } from '../searchrc/searchrc';
 
-import * as Leaflet from 'leaflet';
-import 'leaflet-draw';
+import leaflet from 'leaflet';
+
 
 /**
  * Generated class for the DetailsrcPage page.
@@ -27,6 +27,7 @@ import 'leaflet-draw';
 export class DetailsrcPage {
 
   item;
+  map: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -41,20 +42,25 @@ export class DetailsrcPage {
     }
 
   ngOnInit():void{
+
+   console.log(this.item);
    this.drawMap();
   }
 
   //mapa leaflet
   drawMap():void{
-   let mapa = Leaflet.map('mapa').setView([-0.1836298, -78.4821206], 13);
-    Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    this.map = leaflet.map('mapa').setView([this.item.latitudAdded, this.item.longitudAdded], 13);
+    leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: 'Guardian Control Centre',
       maxZoom: 18
-    }).addTo(mapa);
+    }).addTo(this.map);
     
-      Leaflet.marker(
-        [-0.126332,-78.491907]   
-      ).addTo(mapa);
+    let markerGroup = leaflet.featureGroup();
+    let marker: any = leaflet.marker([this.item.latitudAdded, this.item.longitudAdded])
+    .bindPopup("Accident").openPopup();
+        
+    markerGroup.addLayer(marker);
+    this.map.addLayer(markerGroup);
   }
 
     
