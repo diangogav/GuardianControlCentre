@@ -7,7 +7,7 @@
 <ion-content padding>
 
 <ion-list>
-  <ion-item  *ngFor='let user of itemsArray' (click)="userPage()">
+  <ion-item  *ngFor='let user of usersArray' (click)="userPage()">
     <ion-avatar item-start>
       <img src="assets/imgs/2.jpg" width="100%">
     </ion-avatar>
@@ -16,5 +16,7 @@
     <button ion-button clear item-end><ion-icon name="arrow-forward"></ion-icon></button>
   </ion-item>
 </ion-list>
-
+<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 </ion-content>

@@ -141,6 +141,7 @@ showMarker(markerArray) {
             snapshot.forEach((childSnapshot) => {
               this.markerArray.push(childSnapshot.val());
             });
+            console.log(this.markerArray);
             this.showMarker(this.markerArray);
             toast.dismiss();
           }); 
