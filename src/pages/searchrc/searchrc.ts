@@ -21,6 +21,7 @@ export class SearchrcPage {
   items;
   markerArray: any[] = [];
   closure = [];
+  countMarkersActual;
 
   constructor(
       public navCtrl: NavController, 
@@ -35,7 +36,7 @@ export class SearchrcPage {
 
 ionViewDidEnter(){
 
-    this.items = firebase.database().ref('markers').orderByKey();
+    this.items = firebase.database().ref('markers').orderByChild("status").equalTo(true).limitToLast(10);
     let toast = this.toastCtrl.create({
         message: "Actualizando... ",
         position: 'top',
@@ -49,9 +50,7 @@ ionViewDidEnter(){
     snapshot.forEach((childSnapshot) => {
       this.markerArray.push(childSnapshot.val());
     });
-    this.markerArray.forEach(data => {
-      console.log(data.shortDescription);
-    })
+    this.countMarkersActual = this.markerArray.length;
     toast.dismiss();
   }); 
 
