@@ -99,6 +99,12 @@ showMarker(markerArray) {
               
             
                 if(expirationDate.getTime() < actualDate.getTime()){
+
+                  var status = {
+                    status: false
+                  }
+                  firebase.database().ref('markers/' + markerArray[i].id).update(status);
+                  console.log(markerArray[i].id);
                     
                 }else{
 
