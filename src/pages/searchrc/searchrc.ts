@@ -35,8 +35,17 @@ export class SearchrcPage {
 /********************************************************************************** */
 
 ionViewDidEnter(){
+  let toast = this.toastCtrl.create({
+    message: "Actualizando... ",
+    position: 'top',
+    dismissOnPageChange: true
+  });
 
-  this.getData();
+ toast.present(); 
+
+    this.getData();
+
+  toast.dismiss();
 
 }
 
