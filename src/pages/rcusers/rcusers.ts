@@ -170,7 +170,8 @@ export class RcusersPage {
 /********************************************************************************** */
 
 
-  userPage(user){
-    this.navCtrl.push(UserPage, { user: user });
+  userPage(userData){
+
+    this.navCtrl.push(UserPage, { userData: userData });
   }
 }
