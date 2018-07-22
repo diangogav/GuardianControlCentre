@@ -35,7 +35,7 @@ myphoto:any;
   duration:'',
   expirationTime:'',
   expirationDate: '',
-  status: true
+  status: "current"
 
  } 
 
