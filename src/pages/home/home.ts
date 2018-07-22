@@ -127,7 +127,7 @@ showMarker(markerArray) {
   }
 //============================================================================
   getMarkers(){
-    this.items = firebase.database().ref('markers').orderByChild("status").equalTo(true);
+    this.items = firebase.database().ref('markers').orderByChild("status").equalTo('current');
             let toast = this.toastCtrl.create({
                 message: "Actualizando... ",
                 position: 'top',
