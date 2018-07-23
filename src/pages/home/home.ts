@@ -26,12 +26,12 @@ export class HomePage {
     public toastCtrl: ToastController
 ) {
 
+  this.getMarkers();
 
   }
  
   ionViewDidEnter() {
 
-    this.getMarkers();
 
   }
 
@@ -124,15 +124,20 @@ showMarker(markerArray) {
                     
                 }else{
 
+                  console.log("holaaaa");
+
+
                   latitud = markerArray[i].latitudAdded
                   longitud = markerArray[i].longitudAdded
 
                   let markerGroup = leaflet.featureGroup();
 
+
+
+                  
                   let marker: any = leaflet .marker([latitud, longitud])
                   .bindPopup( name +'</br><b>Started: </b>'+ startDate +' <b> at </b> '+ startTime
                   +'</br><b>End: </b>'+ endDate +' <b> at </b> '+ endTime) .openPopup();
-
 
                   markerGroup.addLayer(marker);
                   this.map.addLayer(markerGroup);
