@@ -20,7 +20,7 @@ export class RcusersPage {
   
   items;
   usersArray: any[] = [];
-  referenceToOldestKey = '';
+  referenceToOldestUserKey = '';
 
   constructor(
     public navCtrl: NavController, 
@@ -29,7 +29,7 @@ export class RcusersPage {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController
   ) {
-    this.initializeItems();
+
     }
   
   ionViewDidLoad() {
@@ -39,40 +39,19 @@ export class RcusersPage {
     ionViewDidEnter(){
 
       this.getData();
-      /*this.items = firebase.database().ref('users').orderByKey();
-              let toast = this.toastCtrl.create({
-                  message: "Actualizando... ",
-                  position: 'top',
-                  dismissOnPageChange: true
-                });
-
-               toast.present();   
-       
-      this.items.once('value',(dataSnapshot) => {
-            
-          toast.dismiss();
-
-          this.itemsArray = [];
-
-          dataSnapshot.forEach((childSnapshot) => {
-
-          this.itemsArray.push(childSnapshot.val());
-
-         
-        }); 
-
-        console.log(this.itemsArray);
-    })*/
-
+      
   }
 
   getData(){
 
 
 
-    if(this.referenceToOldestKey == undefined){
+    if(this.referenceToOldestUserKey == undefined){
   
-    }else if (!this.referenceToOldestKey) { // if initial fetch
+      console.log("1" , this.referenceToOldestUserKey);
+  
+    }else if (!this.referenceToOldestUserKey) { // if initial fetch
+      console.log("2" , this.referenceToOldestUserKey);
   
       let toast = this.toastCtrl.create({
         message: "Actualizando... ",
@@ -97,7 +76,7 @@ export class RcusersPage {
              .map((key) => snapshot.val()[key]);
   
           // storing reference
-          this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+          this.referenceToOldestUserKey = arrayOfKeys[arrayOfKeys.length-1];
   
           results.forEach(data => {
             this.usersArray.push(data);
@@ -113,11 +92,12 @@ export class RcusersPage {
      
      } else {
   
-      
+      console.log("3" , this.referenceToOldestUserKey);
+  
      
-      firebase.database().ref('markers')
+      firebase.database().ref('users')
         .orderByKey()
-        .endAt(this.referenceToOldestKey)
+        .endAt(this.referenceToOldestUserKey)
         .limitToLast(20)
         .once('value')
         .then((snapshot) => {
@@ -134,22 +114,20 @@ export class RcusersPage {
               .map((key) => snapshot.val()[key]);
   
            // updating reference
-           this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+           this.referenceToOldestUserKey = arrayOfKeys[arrayOfKeys.length-1];
            // Do what you want to do with the data, i.e.
            // append to page or dispatch({ … }) if using redux
            results.forEach(data => {
             this.usersArray.push(data);
+  
+  
           });
-
-
         })
        .catch((error) => {  } );
      }
   }
 
-  initializeItems() {
-    this.items;
-  }
+
 
 
 /********************************************************************************** */

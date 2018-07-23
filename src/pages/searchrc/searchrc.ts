@@ -65,7 +65,10 @@ getData(){
 
   if(this.referenceToOldestKey == undefined){
 
+    console.log("1" , this.referenceToOldestKey);
+
   }else if (!this.referenceToOldestKey) { // if initial fetch
+    console.log("2" , this.referenceToOldestKey);
 
     let toast = this.toastCtrl.create({
       message: "Actualizando... ",
@@ -106,7 +109,8 @@ getData(){
    
    } else {
 
-    
+    console.log("3" , this.referenceToOldestKey);
+
    
     firebase.database().ref('markers')
       .orderByKey()
