@@ -20,7 +20,6 @@ export class FirebaseDbProvider {
     public afDB: AngularFireDatabase, 
     public auth: AuthProvider
   ) {
-    console.log('Hello FirebaseDbProvider Provider');
   }
 
   saveUser(user){
@@ -31,7 +30,6 @@ export class FirebaseDbProvider {
     
     const db = firebase.database().ref();
     const userId = firebase.auth().currentUser.uid;
-    console.log(userId);
     const userKey = db.child('users').push().key;
     const markerKey = db.child('markers').push().key;
 
@@ -74,13 +72,22 @@ export class FirebaseDbProvider {
     });
   }
 
-  updateUser(user){
-    console.log(user);
-    var userUid = this.auth.getUser();
+  deleteMarker(markerID){
     
+    console.log(markerID);
+    return this.afDB.database.ref().remove;
+
+  }
+
+  updateUser(user){
+
+
+    var userUid = this.auth.getUser();
      return this.afDB.database.ref('users/'+ userUid).set(user)
     
   }
+
+
 
 
 

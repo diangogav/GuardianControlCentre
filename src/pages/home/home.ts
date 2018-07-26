@@ -165,6 +165,7 @@ showMarker(markerArray) {
 
 startRefreshMarkersTimer(){
 
+
    this.timerVar = Observable.interval(5000).subscribe(x => {
      
       var actualDate = new Date();
