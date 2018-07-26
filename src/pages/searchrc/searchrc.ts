@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angul
 
 import { DetailsrcPage } from '../detailsrc/detailsrc';
 import firebase from 'firebase';
-
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+ 
 /**
  * Generated class for the SearchrcPage page.
  *
@@ -24,9 +25,12 @@ export class SearchrcPage {
   referenceToOldestKey = '';
 
   constructor(
+
       public navCtrl: NavController, 
       public navParams: NavParams,
-      public toastCtrl: ToastController
+      public toastCtrl: ToastController,
+      public dbFirebase :FirebaseDbProvider,
+
     )
    {
 
@@ -65,10 +69,8 @@ getData(){
 
   if(this.referenceToOldestKey == undefined){
 
-    console.log("1" , this.referenceToOldestKey);
 
   }else if (!this.referenceToOldestKey) { // if initial fetch
-    console.log("2" , this.referenceToOldestKey);
 
     let toast = this.toastCtrl.create({
       message: "Actualizando... ",
@@ -97,6 +99,8 @@ getData(){
 
         results.forEach(data => {
           this.markerArray.push(data);
+          
+          
         })
 
         // Do what you want to do with the data, i.e.
@@ -108,10 +112,7 @@ getData(){
      .catch((error) => {  } );
    
    } else {
-
-    console.log("3" , this.referenceToOldestKey);
-
-   
+       
     firebase.database().ref('markers')
       .orderByKey()
       .endAt(this.referenceToOldestKey)
@@ -124,7 +125,6 @@ getData(){
             .sort()
             .reverse()
             .slice(1);
-
 
          // transforming to array
          let results = arrayOfKeys
