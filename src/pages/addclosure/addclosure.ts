@@ -5,6 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
+import { AddClosureValidators } from './../../validators/addClosure/addClosureValidators';
 
 //PAGINAS
 import { HomePage} from '../home/home';
@@ -60,7 +61,7 @@ minDateForm;
       name: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(10)]],
       closureType: ['', [Validators.required]],
       actualStartClosure: ['', [Validators.required]],
-      hour: ['', [Validators.required]],
+      hour: ['', [Validators.required,AddClosureValidators.checkDateActualStartClosure('actualStartClosure')]],
       modeOfDetection: ['', [Validators.required]],
       motive: ['', [Validators.required]],
       duration: ['', [Validators.required]],
