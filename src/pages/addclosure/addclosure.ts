@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { AuthProvider } from '../../providers/auth/auth';
-
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -17,7 +17,9 @@ import { HomePage} from '../home/home';
 export class AddclosurePage {
 
 myphoto:any;
-
+addClossureForm: FormGroup;
+actualDate = new Date();
+minDateForm;
 
  marker = {
   closureType: '',
@@ -45,16 +47,39 @@ myphoto:any;
     public navCtrl: NavController, 
     public navParams: NavParams,
     public auth : AuthProvider,
-   // private apiProvider: ApiProvider,
-    //private variablesProvider: GlobalVariablesProvider,
+    public fb: FormBuilder,
     public geo: Geolocation,
     public alertCtrl : AlertController,
     private camera: Camera,
     private dbFirebase :FirebaseDbProvider
 
-  ) { 
-  //VALOR POR DEFECTO SI NO FUNCIONA LA GEOLOCALIZACION
+  ) {
+    
 
+    this.addClossureForm = this.fb.group({
+      name: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(10)]],
+      closureType: ['', [Validators.required]],
+      actualStartClosure: ['', [Validators.required]],
+      hour: ['', [Validators.required]],
+      modeOfDetection: ['', [Validators.required]],
+      motive: ['', [Validators.required]],
+      duration: ['', [Validators.required]],
+
+    });
+
+  }
+
+
+  ionViewDidEnter() {
+
+    this.minDateForm = (this.actualDate.getDate().toString() + '-' +
+                    (this.actualDate.getMonth().toString()+1) + '-' +
+                    this.actualDate.getMonth().toString()
+                    )
+    }
+
+  saveData(){
+    alert(JSON.stringify(this.addClossureForm.value));
   }
 
   ionViewDidLoad() {}

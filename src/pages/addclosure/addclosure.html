@@ -1,37 +1,66 @@
 <ion-content>
 
+  <form [formGroup]="addClossureForm" (ngSubmit)="saveData()" novalidate>
+
   <ion-item-group>
     <ion-item-divider color="rojo" text-center>Name and type</ion-item-divider>
-
+<!--=================================================================================-->
     <ion-item class="item">
       <ion-label>Closure name:</ion-label>
-       <ion-input type="text" class="input" required [(ngModel)]="marker.shortDescription"></ion-input>
+       <ion-input type="text" class="input" formControlName="name"></ion-input>
    </ion-item>
-  
+
+   <ion-item *ngIf="addClossureForm.get('name').errors && addClossureForm.get('name').dirty">
+    <p *ngIf="addClossureForm.get('name').hasError('required')">Field is required</p>
+    <p *ngIf="addClossureForm.get('name').hasError('minlength')">Min of 5 characters</p>
+    <p *ngIf="addClossureForm.get('name').hasError('maxlength')">Max of 10 characters</p>
+  </ion-item>
+<!--=================================================================================-->  
   <ion-item class="item">
     <ion-label>Type of Closure:</ion-label>
-    <ion-select [(ngModel)]="Closure" cancelText="Cancel" okText="Done">
+    <ion-select formControlName="closureType" cancelText="Cancel" okText="Done">
       <ion-option value="Incident">Incident</ion-option>
       <ion-option value="Issue">Issue</ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
+  <ion-item *ngIf="addClossureForm.get('closureType').errors && addClossureForm.get('closureType').dirty">
+      <p *ngIf="addClossureForm.get('closureType').hasError('required')">Field is required</p>
+  </ion-item>
 
+<!--=================================================================================-->  
+  <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
+  
+<!--=================================================================================-->  
   <ion-item class="item">
     <ion-label>Date:</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" min="2017" class="input" required [(ngModel)]="marker.actualStartClosure"></ion-datetime>
-  </ion-item>
-  <ion-item class="item">
-    <ion-label>Hour:</ion-label>
-    <ion-datetime displayFormat="HH:mm A" class="input" required [(ngModel)]="marker.hour"></ion-datetime>
+    <ion-datetime displayFormat="MM/DD/YYYY" class="input" formControlName="actualStartClosure"></ion-datetime>
   </ion-item>
 
+
+  <ion-item *ngIf="addClossureForm.get('actualStartClosure').errors && addClossureForm.get('actualStartClosure').dirty">
+      <p *ngIf="addClossureForm.get('actualStartClosure').hasError('required')">Field is required</p>
+  </ion-item>
+<!--=================================================================================-->  
+
+
+  <ion-item class="item">
+    <ion-label>Hour:</ion-label>
+    <ion-datetime displayFormat="HH:mm A" class="input" formControlName="hour"></ion-datetime>
+  </ion-item>
+
+  <ion-item *ngIf="addClossureForm.get('hour').errors && addClossureForm.get('hour').dirty">
+      <p *ngIf="addClossureForm.get('hour').hasError('required')">Field is required</p>
+  </ion-item>
+
+<!--=================================================================================-->
   <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
+<!--=================================================================================-->
+
 
   <ion-item class="item">
     <ion-label>Mode of Detection:</ion-label>
-      <ion-select class="select" [(ngModel)]="marker.modeOfDetection" cancelText="Cancel" okText="Done" required>
+      <ion-select class="select" formControlName="modeOfDetection" cancelText="Cancel" okText="Done" required>
         <ion-option value="llamada">Recibí una llamada</ion-option>
         <ion-option value="email">Recibí un Email</ion-option>
         <ion-option value="texto">Recibí texto</ion-option>
@@ -40,9 +69,15 @@
      </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="addClossureForm.get('modeOfDetection').errors && addClossureForm.get('modeOfDetection').dirty">
+      <p *ngIf="addClossureForm.get('modeOfDetection').hasError('required')">Field is required</p>
+  </ion-item>
+
+  <!--=================================================================================-->
+
   <ion-item class="item">
     <ion-label>Select Motives:</ion-label>
-      <ion-select class="select" [(ngModel)]="marker.motive" cancelText="Cancel" okText="Done" required>
+      <ion-select class="select" formControlName="motive" cancelText="Cancel" okText="Done" required>
               <ion-option value="evento">Event</ion-option>
               <ion-option value="transporte">Transport</ion-option>
               <ion-option value="accidente">Accident</ion-option>
@@ -50,22 +85,26 @@
             </ion-select>
   </ion-item>
 
-  <ion-item class="item">
-    <ion-label>Duration:</ion-label>
-    <ion-input type="text" class="input" required [(ngModel)]="marker.duration"></ion-input>
+  <ion-item *ngIf="addClossureForm.get('motive').errors && addClossureForm.get('motive').dirty">
+      <p *ngIf="addClossureForm.get('motive').hasError('required')">Field is required</p>
   </ion-item>
 
-  <ion-item class="item">
-    <ion-label>More Details:</ion-label>
-    <ion-textarea type="text" class="input" [(ngModel)]="marker.moreDetails"></ion-textarea>
+<!--=================================================================================-->
+
+<ion-item class="item">
+    <ion-label>Duration:</ion-label>
+    <ion-datetime displayFormat="HH:mm A" class="input" formControlName="duration"></ion-datetime>
   </ion-item>
-   
+
+  <ion-item *ngIf="addClossureForm.get('duration').errors && addClossureForm.get('duration').dirty">
+      <p *ngIf="addClossureForm.get('duration').hasError('required')">Field is required</p>
+  </ion-item>
+<!--=================================================================================-->
   </ion-item-group>
 
+   <!--<img src="{{ photo }}" width="50px" height="65px">-->
 
-  <img src="{{ photo }}" width="50px" height="65px">
-
-  <!-- BOTONES DE LA CAMARA -->
+  <!-- BOTONES DE LA CAMARA  -->
 
   <ion-row>
     <ion-col col-6><button ion-button color="primary" (click)="takePhoto()">tomar foto</button></ion-col>
@@ -75,6 +114,6 @@
   <!-- BOTONES DEL ADDCLOSURE -->
 
   <button ion-button color="primary" (click)="ActivateGeolocation()">Get Location</button>
-  <button ion-button color="primary" (click)="addClosure()">Save</button>
-  
+  <button ion-button color="primary" [disabled]="addClossureForm.invalid">Save</button>
+  </form>
 </ion-content>
