@@ -52,7 +52,7 @@ minDateForm;
     public geo: Geolocation,
     public alertCtrl : AlertController,
     private camera: Camera,
-    private dbFirebase :FirebaseDbProvider
+    private dbFirebase :FirebaseDbProvider,
 
   ) {
     
@@ -60,23 +60,37 @@ minDateForm;
     this.addClossureForm = this.fb.group({
       name: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(10)]],
       closureType: ['', [Validators.required]],
-      actualStartClosure: ['', [Validators.required]],
-      hour: ['', [Validators.required,AddClosureValidators.checkDateActualStartClosure('actualStartClosure')]],
+      actualStartClosure: ['', [Validators.required,AddClosureValidators.checkDateActualStartClosure]],
+      hour: ['', [Validators.required]],
       modeOfDetection: ['', [Validators.required]],
       motive: ['', [Validators.required]],
       duration: ['', [Validators.required]],
-
+      
     });
 
+ this.addClossureForm.get('hour')
+  .valueChanges
+  .subscribe(value => {
+    
+    var date = this.addClossureForm.get('actualStartClosure').value;
+    date = date.split('-');
+    var day = date[2];
+
+    console.log(day);
+    console.log(this.actualDate.getDate());
+
+    if(day == this.actualDate.getDate()){
+      const validators = [Validators.required, AddClosureValidators.checkHourActualStartClosure];
+      this.addClossureForm.get('hour').setValidators(validators);
+    }
+    this.addClossureForm.updateValueAndValidity();
+  });
   }
 
 
   ionViewDidEnter() {
 
-    this.minDateForm = (this.actualDate.getDate().toString() + '-' +
-                    (this.actualDate.getMonth().toString()+1) + '-' +
-                    this.actualDate.getMonth().toString()
-                    )
+   
     }
 
   saveData(){
@@ -113,7 +127,6 @@ minDateForm;
 
     //=========================================================
     //Calculo el tiempo de expiración del marker
-    console.log(this.marker.actualStartClosure);
     var expirationTime = new Date();
 
     var valuesDate = this.marker.actualStartClosure.split("-");

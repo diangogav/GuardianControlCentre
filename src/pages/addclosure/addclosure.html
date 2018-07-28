@@ -39,18 +39,25 @@
 
 
   <ion-item *ngIf="addClossureForm.get('actualStartClosure').errors && addClossureForm.get('actualStartClosure').dirty">
-      <p *ngIf="addClossureForm.get('actualStartClosure').hasError('required')">Field is required</p>
+    <p *ngIf="addClossureForm.get('actualStartClosure').hasError('required')" class="error">
+      La fecha es requerida.
+    </p>
+    <p *ngIf="addClossureForm.get('actualStartClosure').hasError('dateActualStartClosure')" class="error">
+        La fecha introducida ya pasó
+    </p>
   </ion-item>
 <!--=================================================================================-->  
 
 
-  <ion-item class="item">
+  <ion-item class="item" *ngIf="!addClossureForm.get('actualStartClosure').hasError('dateActualStartClosure')">
     <ion-label>Hour:</ion-label>
     <ion-datetime displayFormat="HH:mm A" class="input" formControlName="hour"></ion-datetime>
   </ion-item>
 
+
   <ion-item *ngIf="addClossureForm.get('hour').errors && addClossureForm.get('hour').dirty">
-      <p *ngIf="addClossureForm.get('hour').hasError('required')">Field is required</p>
+    <p *ngIf="addClossureForm.get('hour').hasError('required')">Field is required</p>
+    <p *ngIf="addClossureForm.get('hour').hasError('hour')">Ingrese una hora válida para el día de hoy</p>
   </ion-item>
 
 <!--=================================================================================-->

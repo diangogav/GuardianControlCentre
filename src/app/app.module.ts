@@ -91,7 +91,7 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     FirebaseDbProvider,
-    UserProvider
+    UserProvider,
   ]
 })
 export class AppModule {}
