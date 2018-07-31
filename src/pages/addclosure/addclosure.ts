@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,ToastController,LoadingController } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -55,6 +55,9 @@ longitude;
     public alertCtrl : AlertController,
     private camera: Camera,
     private dbFirebase :FirebaseDbProvider,
+    public loadingCtrl : LoadingController,
+    public toastCtrl : ToastController,
+
 
   ) {
     
@@ -80,8 +83,6 @@ longitude;
     var date = this.addClossureForm.get('actualStartClosure').value;
     date = date.split('-');
     var day = date[2];
-    console.log("day: ", day);
-    console.log("actualDATE: ", this.actualDate.getDate());
 
     if(day == this.actualDate.getDate()){
 
@@ -99,7 +100,7 @@ longitude;
     }
 
   saveData(){
-    alert(JSON.stringify(this.addClossureForm.value));
+    //alert(JSON.stringify(this.addClossureForm.value));
   }
 
   ionViewDidLoad() {}
@@ -117,16 +118,29 @@ longitude;
     //========================================
     //========================================
     //GEOLOCATION IONIC NATIVE
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present();
+
     this.geo.getCurrentPosition().then ( pos => {
+
 
       this.latitude = pos.coords.latitude;
       this.longitude = pos.coords.longitude;
-      this.marker.latitudAdded = pos.coords.latitude;
-      this.marker.longitudAdded = pos.coords.longitude;
-      alert("La latitud es: " +  this.marker.latitudAdded);
-      alert("La longitud es: " + this.marker.longitudAdded);      
 
-    }).catch( err => console.log(err));
+      loading.dismiss();
+
+      let toast = this.toastCtrl.create({
+        message: "Geolocalización Correcta!!",
+        duration: 3000,
+        position: 'top'
+      });
+
+     toast.present();   
+ 
+    }).catch(err => console.log(err));
   }
 
   addClosure(){
