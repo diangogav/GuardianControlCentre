@@ -57,7 +57,7 @@
 
   <ion-item *ngIf="addClossureForm.get('hour').errors && addClossureForm.get('hour').dirty">
     <p *ngIf="addClossureForm.get('hour').hasError('required')">Field is required</p>
-    <p *ngIf="addClossureForm.get('hour').hasError('hour')">Ingrese una hora válida para el día de hoy</p>
+    <p *ngIf="addClossureForm.get('hour').hasError('time')">Ya esta fecha/hora pasó!</p>
   </ion-item>
 
 <!--=================================================================================-->
@@ -107,6 +107,16 @@
       <p *ngIf="addClossureForm.get('duration').hasError('required')">Field is required</p>
   </ion-item>
 <!--=================================================================================-->
+<ion-item class="item">
+  <ion-label>PRUEBA:</ion-label>
+   <ion-input type="number" class="input" formControlName="latitude" value= "{{ latitude }}"></ion-input>
+</ion-item>
+
+<ion-item class="item">
+  <ion-label>PRUEBA2:</ion-label>
+   <ion-input type="number" class="input" formControlName="longitude" value= "{{ longitude }}"></ion-input>
+</ion-item>
+
   </ion-item-group>
 
    <!--<img src="{{ photo }}" width="50px" height="65px">-->

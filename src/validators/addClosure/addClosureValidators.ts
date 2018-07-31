@@ -50,7 +50,6 @@ export class AddClosureValidators{
 
   static checkHourActualStartClosure(time: FormControl){
 
-    
     var hour;
     var minutes;
     var actualHour;
@@ -67,18 +66,17 @@ export class AddClosureValidators{
     actualHour = actualDate.getHours();
     actualMinutes = actualDate.getMinutes();
 
-    console.log("hour",hour);
-    console.log("minutes",minutes);
-    console.log("actualHour",actualHour);
-    console.log("actualMinutes",actualMinutes);
 
   if (hour < actualHour){
+
+
     return{
       'time': true
     }
   }
   else{
       if (hour == actualHour && minutes < actualMinutes){
+
         return{
           'time': true
         }

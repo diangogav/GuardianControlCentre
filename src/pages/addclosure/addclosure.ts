@@ -21,6 +21,8 @@ myphoto:any;
 addClossureForm: FormGroup;
 actualDate = new Date();
 minDateForm;
+latitude;
+longitude;
 
  marker = {
   closureType: '',
@@ -65,21 +67,24 @@ minDateForm;
       modeOfDetection: ['', [Validators.required]],
       motive: ['', [Validators.required]],
       duration: ['', [Validators.required]],
+      latitude: ['', [Validators.required]],
+      longitude: ['', [Validators.required]],
       
     });
 
- this.addClossureForm.get('hour')
+ this.addClossureForm.get('actualStartClosure')
   .valueChanges
   .subscribe(value => {
+
     
     var date = this.addClossureForm.get('actualStartClosure').value;
     date = date.split('-');
     var day = date[2];
-
-    console.log(day);
-    console.log(this.actualDate.getDate());
+    console.log("day: ", day);
+    console.log("actualDATE: ", this.actualDate.getDate());
 
     if(day == this.actualDate.getDate()){
+
       const validators = [Validators.required, AddClosureValidators.checkHourActualStartClosure];
       this.addClossureForm.get('hour').setValidators(validators);
     }
@@ -114,6 +119,8 @@ minDateForm;
     //GEOLOCATION IONIC NATIVE
     this.geo.getCurrentPosition().then ( pos => {
 
+      this.latitude = pos.coords.latitude;
+      this.longitude = pos.coords.longitude;
       this.marker.latitudAdded = pos.coords.latitude;
       this.marker.longitudAdded = pos.coords.longitude;
       alert("La latitud es: " +  this.marker.latitudAdded);
