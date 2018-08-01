@@ -102,7 +102,7 @@ showMarker(markerArray) {
               var latitud;
               var longitud;
                           
-                if(markerExpiration.getTime() > this.actualDate.getTime()){
+                if(markerExpiration.getTime() < this.actualDate.getTime()){
 
 
                   var status = {
@@ -174,7 +174,7 @@ startRefreshMarkersTimer(){
         
         var actualExpiration = this.getExpirationDate(this.markerArray[i].expirationDate,this.markerArray[i].expirationTime)
 
-        if(actualExpiration.getTime() > actualDate.getTime()){
+        if(actualExpiration.getTime() < actualDate.getTime()){
 
           this.markerGroup.removeLayer(this.markerMapID[i]);
           this.markerMapID = this.markerMapID.splice(i+1,1);
