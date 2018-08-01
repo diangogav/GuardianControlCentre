@@ -74,10 +74,7 @@ longitude;
 
   saveData(){
 
-    console.log("Salvando Datos");
-    console.log("Salvando Datos");
-    console.log("hey",      this.addClossureForm.value.durationHour,);
-    console.log( "hola",     this.addClossureForm.value.durationMinutes);
+
     var expirationTime = this.calculatedExpirationDateMarker(
       this.addClossureForm.value.actualStartClosure,
       this.addClossureForm.value.hour,
@@ -101,7 +98,6 @@ longitude;
                     status: "current"
                   } 
 
-                  console.log(marker);
     //============================================================
         //Petición para guardar el marker en la database
         this.dbFirebase.saveMarker(marker)
