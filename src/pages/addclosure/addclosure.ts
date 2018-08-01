@@ -24,28 +24,6 @@ minDateForm;
 latitude;
 longitude;
 
- marker = {
-  closureType: '',
-  shortDescription: '',
-  actualStartClosure:'',
-  hour:'',
-  modeOfDetection: '',
-  moreDetails:'',
-  aditionalInfo:'',
-  motive:'',
-  latitudPrev:'',
-  longitudPrev:'',
-  latitudAdded: 0,
-  longitudAdded: 0,
-  duration:'',
-  expirationTime:'',
-  expirationDate: '',
-  status: "current"
-
- } 
-
-
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -63,13 +41,14 @@ longitude;
     
 
     this.addClossureForm = this.fb.group({
-      name: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(10)]],
+      name: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(20)]],
       closureType: ['', [Validators.required]],
       actualStartClosure: ['', [Validators.required,AddClosureValidators.checkDateActualStartClosure]],
       hour: ['', [Validators.required]],
       modeOfDetection: ['', [Validators.required]],
       motive: ['', [Validators.required]],
-      duration: ['', [Validators.required]],
+      durationHour: ['', [Validators.required]],
+      durationMinutes: ['', [Validators.required]],
       latitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
       
@@ -93,14 +72,81 @@ longitude;
   });
   }
 
-
-  ionViewDidEnter() {
-
-   
-    }
-
   saveData(){
+
+    console.log("Salvando Datos");
+    console.log("Salvando Datos");
+    console.log("hey",      this.addClossureForm.value.durationHour,);
+    console.log( "hola",     this.addClossureForm.value.durationMinutes);
+    var expirationTime = this.calculatedExpirationDateMarker(
+      this.addClossureForm.value.actualStartClosure,
+      this.addClossureForm.value.hour,
+      this.addClossureForm.value.durationHour,
+      this.addClossureForm.value.durationMinutes
+    )
+
     //alert(JSON.stringify(this.addClossureForm.value));
+
+    var   marker = {
+                    closureType: this.addClossureForm.value.closureType,
+                    shortDescription: this.addClossureForm.value.name,
+                    actualStartClosure: this.addClossureForm.value.actualStartClosure,
+                    hour: this.addClossureForm.value.hour,
+                    modeOfDetection: this.addClossureForm.value.modeOfDetection,
+                    motive: this.addClossureForm.value.motive,
+                    latitudAdded: this.addClossureForm.value.latitude,
+                    longitudAdded: this.addClossureForm.value.longitude,
+                    expirationTime: expirationTime.toLocaleTimeString(),
+                    expirationDate: expirationTime.getFullYear() + '-' + ('0' + (expirationTime.getMonth() + 1)).slice(-2) + '-' + ('0' + expirationTime.getDate()).slice(-2),
+                    status: "current"
+                  } 
+
+                  console.log(marker);
+    //============================================================
+        //Petición para guardar el marker en la database
+        this.dbFirebase.saveMarker(marker)
+        .then(res=>{
+          let alert = this.alertCtrl.create({
+            title: 'Ok!',
+            subTitle: 'Marker guardado correctamente',
+            buttons: ['Aceptar']
+          });
+          alert.present();
+        }).catch(err=>{
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: err.message,
+          buttons: ['Aceptar']
+        });
+        alert.present();
+      })
+  }
+
+  calculatedExpirationDateMarker(actualStartClosure,hour,durationHour,durationMinutes){
+
+    var expirationTime = new Date();
+
+    var valuesDate = actualStartClosure.split("-");
+    var day = valuesDate[2];
+    var month = valuesDate[1];
+    var year = valuesDate[0];
+
+    expirationTime.setDate(parseInt(day));
+    expirationTime.setMonth(parseInt(month) - 1);
+    expirationTime.setFullYear(parseInt(year));
+
+    var valuesTime = hour.split(":");
+    var hour = valuesTime[0];
+    var minutes = valuesTime[1];
+
+    var durationHour = durationHour;
+    var durationMinutes = durationMinutes;
+
+    expirationTime.setHours(parseInt(hour) + parseInt(durationHour));
+    expirationTime.setMinutes(parseInt(minutes) + parseInt(durationMinutes));
+
+    return expirationTime;
+
   }
 
   ionViewDidLoad() {}
@@ -109,9 +155,6 @@ longitude;
     {
       this.navCtrl.push(HomePage);
     }
-
-
-
 
   ActivateGeolocation(){
 
@@ -140,56 +183,17 @@ longitude;
 
      toast.present();   
  
-    }).catch(err => console.log(err));
-  }
-
-  addClosure(){
+    }).catch(err => {
       
-
-    //=========================================================
-    //Calculo el tiempo de expiración del marker
-    var expirationTime = new Date();
-
-    var valuesDate = this.marker.actualStartClosure.split("-");
-    var day = valuesDate[2];
-    var month = valuesDate[1];
-    var year = valuesDate[0];
-
-    expirationTime.setDate(parseInt(day));
-    expirationTime.setMonth(parseInt(month) - 1);
-    expirationTime.setFullYear(parseInt(year));
-
-    var valuesTime = this.marker.hour.split(":");
-    var hour = valuesTime[0];
-    var minutes = valuesTime[1];
-
-    expirationTime.setHours(parseInt(hour) + parseInt(this.marker.duration));
-    expirationTime.setMinutes(parseInt(minutes));
-
-    
-    this.marker.expirationTime = expirationTime.toLocaleTimeString();
-    this.marker.expirationDate = expirationTime.getFullYear() + '-' + ('0' + (expirationTime.getMonth() + 1)).slice(-2) + '-' + ('0' + expirationTime.getDate()).slice(-2);
-
-    
-    //============================================================
-    //Petición para guardar el marker en la database
-      this.dbFirebase.saveMarker(this.marker)
-      .then(res=>{
-        let alert = this.alertCtrl.create({
-          title: 'Ok!',
-          subTitle: 'Marker guardado correctamente',
-          buttons: ['Aceptar']
-        });
-        alert.present();
-      }).catch(err=>{
-      let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: err.message,
-        buttons: ['Aceptar']
+      loading.dismiss();
+      let toast = this.toastCtrl.create({
+        message: "Error: " + err.message,
+        duration: 3000,
+        position: 'top'
       });
-      alert.present();
-    })
 
+     toast.present();
+    });
   }
 
 //====================================================================
