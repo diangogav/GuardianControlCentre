@@ -1,6 +1,6 @@
 <ion-content>
 
-  <form [formGroup]="addClossureForm" (ngSubmit)="saveData()" novalidate>
+  <form [formGroup]="addClossureForm" novalidate>
 
   <ion-item-group>
     <ion-item-divider color="rojo" text-center>Name and type</ion-item-divider>
@@ -13,7 +13,7 @@
    <ion-item *ngIf="addClossureForm.get('name').errors && addClossureForm.get('name').dirty">
     <p *ngIf="addClossureForm.get('name').hasError('required')">Field is required</p>
     <p *ngIf="addClossureForm.get('name').hasError('minlength')">Min of 5 characters</p>
-    <p *ngIf="addClossureForm.get('name').hasError('maxlength')">Max of 10 characters</p>
+    <p *ngIf="addClossureForm.get('name').hasError('maxlength')">Max of 20 characters</p>
   </ion-item>
 <!--=================================================================================-->  
   <ion-item class="item">
@@ -61,7 +61,7 @@
   </ion-item>
 
 <!--=================================================================================-->
-  <ion-item-divider color="rojo" text-center>Date and hour</ion-item-divider>
+  <ion-item-divider color="rojo" text-center>More</ion-item-divider>
 <!--=================================================================================-->
 
 
@@ -95,19 +95,35 @@
   <ion-item *ngIf="addClossureForm.get('motive').errors && addClossureForm.get('motive').dirty">
       <p *ngIf="addClossureForm.get('motive').hasError('required')">Field is required</p>
   </ion-item>
-
+<!--=================================================================================-->
+<ion-item-divider color="rojo" text-center>Duration</ion-item-divider>
+<!--=================================================================================-->
 <!--=================================================================================-->
 
 <ion-item class="item">
-    <ion-label>Duration:</ion-label>
-    <ion-datetime displayFormat="HH:mm A" class="input" formControlName="duration"></ion-datetime>
-  </ion-item>
+  
+    <ion-label>Hours:</ion-label>
+    <!--<ion-datetime displayFormat="HH:mm A" class="input" formControlName="duration" step="900"></ion-datetime>-->
+    <ion-input type="number" class="input" formControlName="durationHour" min="0" max="23" value="0"></ion-input>
 
-  <ion-item *ngIf="addClossureForm.get('duration').errors && addClossureForm.get('duration').dirty">
-      <p *ngIf="addClossureForm.get('duration').hasError('required')">Field is required</p>
-  </ion-item>
-<!--=================================================================================-->
+</ion-item>
 <ion-item class="item">
+  
+    <ion-label>Minutes:</ion-label>
+    <!--<ion-datetime displayFormat="HH:mm A" class="input" formControlName="duration" step="900"></ion-datetime>-->
+    <ion-input type="number" class="input" formControlName="durationMinutes" step="15" min="15" max="45" value="15"></ion-input>
+
+</ion-item>
+
+<ion-item *ngIf="addClossureForm.get('durationHour').errors && addClossureForm.get('durationHour').dirty">
+    <p *ngIf="addClossureForm.get('durationHour').hasError('required')">Field is required</p>
+</ion-item>
+
+<!--=================================================================================-->
+<ion-item-divider color="rojo" text-center>Geolocation</ion-item-divider>
+<!--=================================================================================-->
+
+<ion-item class="item" >
   <ion-label>Latitude</ion-label>
    <ion-input type="number" class="input" formControlName="latitude" value= "{{ latitude }}"  disabled></ion-input>
 </ion-item>
@@ -116,6 +132,7 @@
   <ion-label>Longitude</ion-label>
    <ion-input type="number" class="input" formControlName="longitude" value= "{{ longitude }}"  disabled></ion-input>
 </ion-item>
+<button ion-button color="primary" (click)="ActivateGeolocation()">Get Location</button>
 
   </ion-item-group>
 
@@ -130,7 +147,6 @@
 
   <!-- BOTONES DEL ADDCLOSURE -->
 
-  <button ion-button color="primary" (click)="ActivateGeolocation()">Get Location</button>
-  <button ion-button color="primary" [disabled]="addClossureForm.invalid">Save</button>
+  <button ion-button color="primary" [disabled]="addClossureForm.invalid" (click)="saveData()">Save</button>
   </form>
 </ion-content>
