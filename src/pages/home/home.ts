@@ -85,6 +85,7 @@ showMarker(markerArray) {
         var startTime;
         var endDate;
         var endTime;
+        var id;
 
 
         for (var i=0; i<markerArray.length;i++){
@@ -94,6 +95,7 @@ showMarker(markerArray) {
           startTime = markerArray[i].hour;
           endDate = markerArray[i].expirationDate;
           endTime = markerArray[i].expirationTime;
+          id = markerArray[i].id;
 
           var markerExpiration = new Date();
           
@@ -110,7 +112,11 @@ showMarker(markerArray) {
                   }
                   firebase.database().ref('markers/' + markerArray[i].id).update(status);
                     
-                }else{
+                }else if(markerArray[i].status == "expired" && this.actualDate.getDate() > markerExpiration.getDate()){
+                  this.dbFirebase.deleteMarker(id);
+                }
+                
+                else{
 
                   latitud = markerArray[i].latitudAdded
                   longitud = markerArray[i].longitudAdded
