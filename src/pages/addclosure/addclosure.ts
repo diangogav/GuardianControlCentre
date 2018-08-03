@@ -95,7 +95,8 @@ longitude;
                     longitudAdded: this.addClossureForm.value.longitude,
                     expirationTime: expirationTime.toLocaleTimeString(),
                     expirationDate: expirationTime.getFullYear() + '-' + ('0' + (expirationTime.getMonth() + 1)).slice(-2) + '-' + ('0' + expirationTime.getDate()).slice(-2),
-                    status: "current"
+                    status: "current",
+                    user: this.auth.getUser()
                   } 
 
     //============================================================
