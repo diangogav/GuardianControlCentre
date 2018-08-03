@@ -86,54 +86,68 @@ showMarker(markerArray) {
         var endDate;
         var endTime;
         var id;
+        var userID;
 
 
         for (var i=0; i<markerArray.length;i++){
-          
-          name = markerArray[i].shortDescription;
-          startDate = markerArray[i].actualStartClosure;
-          startTime = markerArray[i].hour;
-          endDate = markerArray[i].expirationDate;
-          endTime = markerArray[i].expirationTime;
+
           id = markerArray[i].id;
-
-          var markerExpiration = new Date();
+          userID = markerArray[i].user;
           
-          markerExpiration = this.getExpirationDate(markerArray[i].expirationDate,markerArray[i].expirationTime)
+          var markerExpiration = new Date();
+            
+          markerExpiration = this.getExpirationDate(markerArray[i].expirationDate,markerArray[i].expirationTime);
 
-              var latitud;
-              var longitud;
-                          
-                if(markerExpiration.getTime() < this.actualDate.getTime()){
+          if(markerArray[i].status == "current"){
+            console.log("Es current");
+            name = markerArray[i].shortDescription;
+            startDate = markerArray[i].actualStartClosure;
+            startTime = markerArray[i].hour;
+            endDate = markerArray[i].expirationDate;
+            endTime = markerArray[i].expirationTime;
 
 
-                  var status = {
-                    status: "expired"
-                  }
-                  firebase.database().ref('markers/' + markerArray[i].id).update(status);
+  
+                var latitud;
+                var longitud;
+                            
+                  if(markerExpiration.getTime() < this.actualDate.getTime()){
+  
+  
+                    var status = {
+                      status: "expired"
+                    }
+                    firebase.database().ref('markers/' + markerArray[i].id).update(status);
+                      
+                  }else if(markerArray[i].status == "expired" && this.actualDate.getDate() > markerExpiration.getDate()){
                     
-                }else if(markerArray[i].status == "expired" && this.actualDate.getDate() > markerExpiration.getDate()){
-                  this.dbFirebase.deleteMarker(id);
-                }
-                
-                else{
-
-                  latitud = markerArray[i].latitudAdded
-                  longitud = markerArray[i].longitudAdded
-
-                  this.markerGroup = leaflet.featureGroup();
-
-                  let marker: any = leaflet .marker([latitud, longitud])
-                  .bindPopup( name +'</br><b>Started: </b>'+ startDate +' <b> at </b> '+ startTime
-                  +'</br><b>End: </b>'+ endDate +' <b> at </b> '+ endTime) .openPopup();
-
-                  this.markerGroup.addLayer(marker);
+                    console.log("Eliminando marker: " , id);
+                  }
                   
-                  this.markerMapID.push(this.markerGroup.getLayerId(marker));
+                  else{
+                    
+                    latitud = markerArray[i].latitudAdded
+                    longitud = markerArray[i].longitudAdded
+                    
+                    this.markerGroup = leaflet.featureGroup();
+  
+                    let marker: any = leaflet .marker([latitud, longitud])
+                    .bindPopup( name +'</br><b>Started: </b>'+ startDate +' <b> at </b> '+ startTime
+                    +'</br><b>End: </b>'+ endDate +' <b> at </b> '+ endTime) .openPopup();
+  
+                    this.markerGroup.addLayer(marker);
+                    
+                    this.markerMapID.push(this.markerGroup.getLayerId(marker));
+                    
+                    this.map.addLayer(this.markerGroup);
+  
+                  }
+                }else if(markerArray[i].status == "expired"  && this.actualDate.getDate() > markerExpiration.getDate()){
 
-                  this.map.addLayer(this.markerGroup);
-
-        }
+                  console.log("Eliminando " , id);
+                  this.deleteMarker(id,userID);
+                }
+          
       }
     }
   }
@@ -141,7 +155,7 @@ showMarker(markerArray) {
 //Get markers from de firebase
 
   getMarkers(){
-    this.items = firebase.database().ref('markers').orderByChild("status").equalTo('current');
+    this.items = firebase.database().ref('markers');
             let toast = this.toastCtrl.create({
                 message: "Actualizando... ",
                 position: 'top',
@@ -194,6 +208,12 @@ startRefreshMarkersTimer(){
         }
       }                    
     })
+  }
+
+  deleteMarker(id,userID){
+
+    this.dbFirebase.deleteMarker(id,userID);
+
   }
 
 //===============================================================================================================================
