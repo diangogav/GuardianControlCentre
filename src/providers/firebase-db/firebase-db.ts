@@ -72,11 +72,19 @@ export class FirebaseDbProvider {
     });
   }
 
-  deleteMarker(markerID){
+  deleteMarker(markerID,userID){
     
-    console.log(markerID);
-    return this.afDB.database.ref().remove;
+    console.log(markerID,userID);
 
+    const db = firebase.database().ref();
+
+    const newData = {
+      [`UsersToMarkers/${userID}/markerKeys/${markerID}`]: null,
+      [`markers/${markerID}`]: null,
+
+    };
+
+    return db.update(newData);    
   }
 
   updateUser(user){
