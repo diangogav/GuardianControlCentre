@@ -144,7 +144,6 @@ showMarker(markerArray) {
                   }
                 }else if(markerArray[i].status == "expired"  && this.actualDate.getDate() > markerExpiration.getDate()){
 
-                  console.log("Eliminando " , id);
                   this.deleteMarker(id,userID);
                 }
           
@@ -198,9 +197,9 @@ startRefreshMarkersTimer(){
           var actualExpiration = this.getExpirationDate(this.markerArray[i].expirationDate,this.markerArray[i].expirationTime)
     
           if(actualExpiration.getTime() < actualDate.getTime()){
-    
+
             this.markerGroup.removeLayer(this.markerMapID[i]);
-            //this.markerMapID = this.markerMapID.splice(i+1,1);
+            this.markerMapID = this.markerMapID.splice(i+1,1);
     
             var status = {
               status: "expired"
