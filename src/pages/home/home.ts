@@ -185,29 +185,35 @@ showMarker(markerArray) {
 
 startRefreshMarkersTimer(){
 
+  if(this.markerGroup === undefined){
 
-   this.timerVar = Observable.interval(5000).subscribe(x => {
-     
-      var actualDate = new Date();
+  }else{
 
-      for (var i=0; i<this.markerArray.length;i++){
+      this.timerVar = Observable.interval(5000).subscribe(x => {
         
-        var actualExpiration = this.getExpirationDate(this.markerArray[i].expirationDate,this.markerArray[i].expirationTime)
-
-        if(actualExpiration.getTime() < actualDate.getTime()){
-
-          this.markerGroup.removeLayer(this.markerMapID[i]);
-          this.markerMapID = this.markerMapID.splice(i+1,1);
-
-          var status = {
-            status: "expired"
-          }
+        var actualDate = new Date();
+    
+        for (var i=0; i<this.markerArray.length;i++){
           
-          firebase.database().ref('markers/' + this.markerArray[i].id).update(status);
+          var actualExpiration = this.getExpirationDate(this.markerArray[i].expirationDate,this.markerArray[i].expirationTime)
+    
+          if(actualExpiration.getTime() < actualDate.getTime()){
+    
+            this.markerGroup.removeLayer(this.markerMapID[i]);
+            //this.markerMapID = this.markerMapID.splice(i+1,1);
+    
+            var status = {
+              status: "expired"
+            }
+            
+            firebase.database().ref('markers/' + this.markerArray[i].id).update(status);
+    
+          }
+        }                    
+      })
+  }
+  
 
-        }
-      }                    
-    })
   }
 
   deleteMarker(id,userID){
