@@ -79,40 +79,55 @@ getData(){
     });
   
    toast.present(); 
-
+  
     firebase.database().ref('markers')
     .orderByKey()
     .limitToLast(20)
     .once('value')
-    .then((snapshot) => { 
-        // changing to reverse chronological order (latest first)
-        let arrayOfKeys = Object.keys(snapshot.val())
-           .sort()
-           .reverse();
-        // transforming to array
+    .then((snapshot) => {
 
-        let results = arrayOfKeys
-           .map((key) => snapshot.val()[key]);
+      if(snapshot.val() == null){
 
-        // storing reference
-        this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+        let toastNull = this.toastCtrl.create({
+          message: "No hay accidentes registrados rescientemente",
+          position: 'top',
+          dismissOnPageChange: true,
+          duration: 10000
+        });
 
-        results.forEach(data => {
-          this.markerArray.push(data);
-          
-          
-        })
+        toastNull.present();
 
+      }else{
+
+          // changing to reverse chronological order (latest first)
+          let arrayOfKeys = Object.keys(snapshot.val())
+            .sort()
+            .reverse();
+          // transforming to array
+    
+          let results = arrayOfKeys
+            .map((key) => snapshot.val()[key]);
+    
+          // storing reference
+          this.referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+    
+          results.forEach(data => {
+            this.markerArray.push(data);
+          })
+      }
+      
         // Do what you want to do with the data, i.e.
         // append to page or dispatch({ … }) if using redux
 
         toast.dismiss();
 
      })
-     .catch((error) => {  } );
+     .catch((error) => {  
+      
+    } );
    
    } else {
-       
+
     firebase.database().ref('markers')
       .orderByKey()
       .endAt(this.referenceToOldestKey)
@@ -136,8 +151,6 @@ getData(){
          // append to page or dispatch({ … }) if using redux
          results.forEach(data => {
           this.markerArray.push(data);
-
-
         });
       })
      .catch((error) => {  } );
