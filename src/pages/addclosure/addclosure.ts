@@ -105,13 +105,13 @@ longitude;
         .then(res=>{
           let alert = this.alertCtrl.create({
             title: 'Ok!',
-            subTitle: 'Marker guardado correctamente',
+            subTitle: 'Marker saved correctly',
             buttons: ['Aceptar']
           });
           alert.present();
         }).catch(err=>{
         let alert = this.alertCtrl.create({
-          title: 'Error',
+          title: 'Marker not save correctly',
           subTitle: err.message,
           buttons: ['Aceptar']
         });
